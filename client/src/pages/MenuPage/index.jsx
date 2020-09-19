@@ -1,12 +1,13 @@
 import React from "react";
-import { getUserDetails } from "../../utils/api";
+import { MenuComponent } from "../../components";
+import { getGuilds, getUserDetails } from "../../utils/api";
 
 export function MenuPage({ history }) {
   //create user state variable, and setUser fucntion
   const [user, setUser] = React.useState(null);
   //keeps track of the component -> if we're in loading screen or not
   const [loading, setLoading] = React.useState(true);
-
+  const [guilds, setGuilds] = React.useState([]);
   //makes the api call to get user data from mongodb
   React.useEffect(() => {
     getUserDetails()
@@ -14,6 +15,11 @@ export function MenuPage({ history }) {
         console.log(data);
         setUser(data); //update state var user
         setLoading(false);
+        return getGuilds();
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setGuilds(data);
       })
       .catch((err) => {
         history.push("/"); //if user not logged in, redirect to main route
@@ -26,6 +32,7 @@ export function MenuPage({ history }) {
     !loading && (
       <div>
         <h1>Main Page</h1>
+        <MenuComponent guilds={guilds} />
       </div>
     )
   );
