@@ -1,6 +1,7 @@
 import React from "react";
 import { MenuComponent } from "../../components";
 import { getGuilds, getUserDetails } from "../../utils/api";
+import { Text } from "@chakra-ui/core";
 
 export function MenuPage({ history }) {
   //create user state variable, and setUser fucntion
@@ -31,7 +32,9 @@ export function MenuPage({ history }) {
   return (
     !loading && (
       <div>
-        <h1>Main Page</h1>
+        <Text fontSize="4xl" m={5}>
+          Main Page
+        </Text>
         <MenuComponent guilds={guilds} />
       </div>
     )
